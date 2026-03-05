@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        # Nutzt das lokale Image aus dem Minikube-Speicher
+        image: backend:latest
+        # WICHTIG: Verhindert, dass K8s versucht, das Image aus dem Internet zu laden
+        imagePullPolicy: Never 
+        ports:
+        - containerPort: 8000
+        # Lädt alle Umgebungsvariablen (DB-Passwort, Host etc.) aus der ConfigMap
+        envFrom:
+        - configMapRef:
+            name: backend-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: dev
+spec:
+  ports:
+  - port: 8000
+    targetPort: 8000
+  selector:
+    app: backend

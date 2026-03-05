@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        # Nutzt das lokale Image, das du in Minikube gebaut hast
+        image: frontend:latest
+        # WICHTIG: Verhindert, dass K8s im Internet nach dem Image sucht
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: dev
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: frontend
