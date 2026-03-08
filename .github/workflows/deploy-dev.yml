@@ -24,8 +24,9 @@ jobs:
       - name: Write kubeconfig
         run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG_DEV }}" > $HOME/.kube/config
-          chmod 600 $HOME/.kube/config
+          printf '%s' "${{ secrets.KUBECONFIG_DEV }}" > $HOME/.kube/config-ci
+          chmod 600 $HOME/.kube/config-ci
+          echo "KUBECONFIG=$HOME/.kube/config-ci" >> $GITHUB_ENV
 
       - name: Apply dev manifests
         run: |
