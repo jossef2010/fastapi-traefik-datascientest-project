@@ -16,7 +16,7 @@ spec:
       containers:
       - name: frontend
 
-        image: ghcr.io/luca10112/fastapi-traefik-datascientest-project-frontend:latest
+        image: ghcr.io/mango/fastapi-traefik-datascientest-project-frontend:latest
 
         imagePullPolicy: Always
         ports:
