@@ -38,6 +38,17 @@ pipeline {
                     echo "🧪 Running backend tests..."
                     sh '''
                         cd backend
+                        echo "📦 Installing dependencies with pip..."
+                
+                        # Prüfe ob requirements.txt existiert
+                	if [ -f "requirements.txt" ]; then
+                            pip install -r requirements.txt
+                	elif [ -f "pyproject.toml" ]; then
+                    	    # Für pyproject.toml
+                    	    pip install .
+                        else
+                           echo "⚠️ Keine requirements.txt gefunden, überspringe..."
+                        fi
                         # Python venv erstellen und Abhängigkeiten installieren
                         python3 -m venv venv
                         . venv/bin/activate
