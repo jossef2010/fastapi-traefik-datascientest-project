@@ -17,7 +17,7 @@ pipeline {
         FRONTEND_PORT = "8080"
         
         // GitHub Repo
-        GIT_REPO = "https://github.com/Manqo/fastapi-traefik-datascientest-project.git"
+        GIT_REPO = "https://github.com/jossef2010/fastapi-traefik-datascientest-project.git"
         GIT_BRANCH = "main"
     }
     
