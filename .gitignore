@@ -1,6 +1,33 @@
-.vscode
-node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
+--- TERRAFORM (Neu) ---
+
+.terraform/
+*.tfstate
+.tfstate.
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+_override.tf.json
+crash.log
+crash..log
+.terraformrc
+terraform.rc
+
+--- PYTHON & BACKEND ---
+
+pycache/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+build/
+dist/
+
+--- MAC & SYSTEM ---
+
+.DS_Store
+.idea/
+.vscode/
