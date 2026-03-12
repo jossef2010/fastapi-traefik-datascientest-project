@@ -20,12 +20,51 @@ spec:
           ports:
             - containerPort: 8000
 
-          # Lädt Variablen aus ConfigMap und Secret
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+
           envFrom:
             - configMapRef:
                 name: backend-config
             - secretRef:
                 name: backend-secret
+
+          env:
+            # Server Setup
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "8000"
+
+            # API Konfiguration
+            - name: API_V1_STR
+              value: "/v1"
+
+            # FastAPI Docs
+            - name: DOCS_URL
+              value: "/docs"
+            - name: OPENAPI_URL
+              value: "/openapi.json"
+
+          readinessProbe:
+            httpGet:
+              path: /docs
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 5
+
+          livenessProbe:
+            httpGet:
+              path: /docs
+              port: 8000
+            initialDelaySeconds: 90
+            periodSeconds: 20
 
 ---
 apiVersion: v1
@@ -34,6 +73,7 @@ metadata:
   name: backend
   namespace: dev
 spec:
+  type: ClusterIP
   selector:
     app: backend
   ports:
