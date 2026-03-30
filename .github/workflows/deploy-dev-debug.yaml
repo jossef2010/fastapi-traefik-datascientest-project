@@ -18,7 +18,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: app
         ports:
-          - 5432:5432
+          - 5433:5432
         options: >-
           --health-cmd="pg_isready -U postgres -d app"
           --health-interval=10s
@@ -43,7 +43,7 @@ jobs:
 
       - name: Wait for Postgres
         run: |
-          until pg_isready -h localhost -p 5432 -U postgres -d app; do
+          until pg_isready -h localhost -p 5433 -U postgres -d app; do
             echo "Waiting for postgres..."
             sleep 2
           done
@@ -57,7 +57,7 @@ jobs:
           FIRST_SUPERUSER_PASSWORD: "debugpassword123"
 
           POSTGRES_SERVER: "localhost"
-          POSTGRES_PORT: "5432"
+          POSTGRES_PORT: "5433"
           POSTGRES_USER: "postgres"
           POSTGRES_PASSWORD: "postgres"
           POSTGRES_DB: "app"
